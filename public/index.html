@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SVG IMAGE EDITOR</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SVG IMAGE EDITOR">
+    <meta name="keywords" content="SVG IMAGE EDITOR">
+    <meta name="author" content="SVG IMAGE EDITOR">
+    <!-- Load jquery, bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <!-- Custom CSS End -->
+</head>
+
+<body>
+    <h3>SVG IMAGE EDITOR</h3>
+    <br>
+    <div id="fileLog"> 
+        <h3>FILE LOG</h3>
+        <table id=flogTable>
+            <tr>
+                <th>Image</th>
+                <th>File Name</th>
+                <th>File Size</th>
+                <th>Number of Rectangles</th>
+                <th>Number of Circles</th>
+                <th>Number of Paths</th>
+                <th>Number of Groups</th>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+        <br>
+        
+        <form action="/upload" method="post" encType="multipart/form-data">
+            <label>Choose a file: </label>
+            <input name='uploadFile' type='file' accept=".svg">
+            <br>
+            <input type='submit' value='Submit'>
+        </form>
+    </div>
+
+    <hr>
+    <h3>VIEW PANEL</h3>
+    <select id='viewPanelSelect'></select>
+    <div id="svgViewPanel">
+        <div id="svgViewPanelDiv">
+            <img id="svgViewPanelImg" src="" style="width:800px">
+        </div>
+        <table id="svgViewTable1">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td id="svgViewTitle"></td>
+                <td id="svgViewDesc"></td>
+            </tr>
+        </table>
+        <table id="svgViewTable2">
+            <thead>
+                <th>Component</th>
+                <th>Summary</th>
+                <th>Other Attributes</th>
+            </thead>
+        </table>
+        
+    </div>
+
+    <hr>
+
+    <div id="addFnc">
+        <h3>ADDTIONAL FUNCTIONALITY</h3>
+        <table>
+            <thead>
+                <th>Select Component</th>
+                <th>Edit Values</th>
+                <th>Add Component</th>
+            </thead>
+            <td><select id='showAttrSelect'></select></td>
+            <td>
+                <input id='editValueButton' type='submit' value='Edit Values'>
+                <input id='editTitDec' type='submit' value='Edit Title/Desc'>
+            </td>
+            <td><input id='addCompButton' type='submit' value='Add Component'> </td>
+        </table>
+    </div>
+
+    <div id='editFnc'>
+        <table id='editTableOuter'>
+            <tr>
+                <td id='tableData'>
+                    <table id='editTableInner'>
+                        <thead>
+                            <th>Attribute Name</th>
+                            <th>Value</th>
+                        </thead>
+                    </table>
+                </td>
+                <td> 
+                    <div id='tableData2'>
+                        <h3>Edit Values</h3>
+                        <label>Attribute Name: </label>
+                        <input id='editName' type='text'>
+                        <br>
+                        <label>Attribute Value:</label>
+                        <input id='editValue' type='text'>
+                        <br>
+                        <input id='editSubmit' type='submit' value='Submit'>
+                    </div>
+                    <div id='tableData3'>
+                        <h3>Add Component</h3>
+                        <select id='addSelect'>
+                            <option value='Rectangle'>Rectangle</option>
+                            <option value='Circle'>Circle</option>
+                            <option value='Path'>Path</option>
+                        </select>
+                        <br><br>
+                        <label>Attribute Name: </label>
+                        <input id='addName' type='text'>
+                        <br>
+                        <label>Attribute Value:</label>
+                        <input id='addValue' type='text'>
+                        <br>
+                        <input id='addAttr' type='submit' value='Add Attr'>
+                        <input id='addSubmit' type='submit' value='Submit Shape'>
+                    </div>
+                    <div id='tableData4'>
+                        <h3>Edit Title/Description</h3>
+                        <label>Title:</label>
+                        <input id='changeTitle' type='text'>
+                        <input id='changeTitBtn' type='submit' value='Change'>
+                        <br>
+                        <label>Description</label>
+                        <input id='changeDesc' type='text'>
+                        <input id='changeDescBtn' type='submit' value='Change'>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+
+    <!-- Leave me at the bottom of body -->
+    <script src="/index.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

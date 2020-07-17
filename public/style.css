@@ -1,0 +1,80 @@
+html {
+    width: 60%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+    font-size: 16px;
+    background-color: #FFFFFF;
+}
+table{
+    width: 100%;
+    border: 1px solid black;
+}
+td, th{
+    border: 1px solid black;
+    text-align: center;
+}
+
+#svgViewTitle{
+    height: 30px;
+}
+
+#tableData{
+    width: 600px;
+    white-space: nowrap;
+}
+
+#svgViewDesc{
+    height: 30px;
+}
+
+#frmUpload{
+    text-align: left;
+}
+#svgViewPanelImg{
+    width: 800px;
+}
+
+#svgViewPanelImg{
+    width: 200px;
+}
+#svgViewPanelDiv{
+    border: 1px solid black;
+    text-align: center;
+}
+body {
+    height: 100%;
+    min-height: 100%;
+    line-height: 1.75;
+    background-color: #FFFFFF;
+}
+a:link:hover {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    text-decoration: underline;
+    cursor: pointer;
+    cursor: hand;
+}
+input[type=submit], button {
+    cursor: pointer;
+    cursor: hand;
+}
+@media(max-width: 900px) {
+    html {
+        font-size: 14px !important;
+        width: 80% !important;
+    }
+}
+@media(max-width: 480px) {
+    html {
+        font-size: 12px !important;
+        width: 90% !important;
+    }
+}
+@media(max-width: 320px) {
+    html {
+        font-size: 12px !important;
+        width: 100% !important;
+    }
+}

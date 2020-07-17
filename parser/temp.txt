@@ -1,0 +1,189 @@
+bool validRect(Rectangle* rect){
+    if(rect->width < 0 || rect->height < 0) return 0;
+    if(rect->otherAttributes == NULL) return 0;
+    return 1;
+}
+bool validCir(Circle* cir){
+    if(cir->r < 0) return 0;
+    if(cir->otherAttributes == NULL) return 0;
+    return 1;
+}
+bool validPath(Path* path){
+    if(path->data == NULL) return 0;
+    if(path->otherAttributes == NULL) return 0;
+    return 1;
+}
+
+
+
+
+
+
+
+
+void changeCir(SVGimage* image, int elemIndex, Attribute* newAttribute){
+    Node* cur_node;
+    int i;
+    float temp;
+
+    if(getLength(image->circles) == 0){
+        printf("There are no Circles!\n");
+        return;
+    } 
+
+    if(getLength(image->circles) <= elemIndex){
+        printf("INDEX OUT OF BOUNDS");
+        return;
+    }
+
+    for(cur_node = image->circles->head, i = 0; i < elemIndex ; cur_node = cur_node->next, i ++);
+    
+    if(strcmp(newAttribute->name, "cx") == 0){
+        temp = parseInt(newAttribute->value);
+        ((Circle*)(cur_node->data))->cx = temp;
+    }else if(strcmp(newAttribute->name, "cy") == 0){
+        temp = parseInt(newAttribute->value);
+        ((Circle*)(cur_node->data))->cy = temp;
+    }else if(strcmp(newAttribute->name, "r") == 0){
+        temp = parseInt(newAttribute->value);
+        if(temp < 0) temp = 0;
+        ((Circle*)(cur_node->data))->r = temp;
+        // char* svgString = SVGimageToString(image);
+        // printf("\n%s\n", svgString);
+        // free(svgString);
+        printf("[%s] = [%s]\n", newAttribute->name ,newAttribute->value);
+        printf("[%s] = [%f]\n", "r" ,((Circle*)(cur_node->data))->r);
+
+    }else if(!checkCir((Circle*)(cur_node)->data, newAttribute)){
+        Attribute* tempAttr = calloc(1, sizeof(Attribute));
+        tempAttr->name = parseData(newAttribute->name);
+        tempAttr->value = parseData(newAttribute->value);
+        insertBack(((Circle*)(cur_node->data))->otherAttributes, tempAttr);
+    }
+    free(newAttribute->name);
+    free(newAttribute->value);
+    free(newAttribute);
+
+}
+
+bool checkCir(Circle* cir, Attribute* newAttribute){
+    Node* cur_node;
+    char* name, *value;
+    int check = 0;
+    for(cur_node = cir->otherAttributes->head; cur_node; cur_node = cur_node->next){
+        if(strcmp(((Attribute*)(cur_node->data))->name, newAttribute->name) == 0){
+            free(((Attribute*)(cur_node->data))->name);
+            free(((Attribute*)(cur_node->data))->value);
+            name = parseData(newAttribute->name);
+            value = parseData(newAttribute->value);
+            (((Attribute*)(cur_node->data))->name) = name;
+            (((Attribute*)(cur_node->data))->value) = value;
+            check = 1;
+            break;
+        }
+    }
+
+    return check;
+}
+
+void changePath(SVGimage* image, int elemIndex, Attribute* newAttribute){
+    Node* cur_node;
+    char* value;
+    int i;
+
+    if(getLength(image->paths) == 0){
+        printf("There are no Paths!\n");
+        return;
+    } 
+
+    if(getLength(image->paths) <= elemIndex){
+        printf("INDEX OUT OF BOUNDS");
+        return;
+    }
+
+    for(cur_node = image->paths->head, i = 0; i < elemIndex ; cur_node = cur_node->next, i ++);
+    
+    if(strcmp(newAttribute->name, "d") == 0){
+        free(((Path*)(cur_node->data))->data);
+        value = parseData(newAttribute->value);
+        ((Path*)(cur_node->data))->data = value;
+        printf("[%s] = [%s]\n", newAttribute->name ,newAttribute->value);
+        // int n = strlen(((Path*)(cur_node->data))->data);
+        // strncpy(((Path*)(cur_node->data))->data, newAttribute->value, n);
+    }else if(!checkPath((Path*)(cur_node)->data, newAttribute)){
+        Attribute* tempAttr = calloc(1, sizeof(Attribute));
+        tempAttr->name = parseData(newAttribute->name);
+        tempAttr->value = parseData(newAttribute->value);
+        insertBack(((Path*)(cur_node->data))->otherAttributes, tempAttr);
+    }
+    free(newAttribute->name);
+    free(newAttribute->value);
+    free(newAttribute);
+}
+
+bool checkPath(Path* path, Attribute* newAttribute){
+    Node* cur_node;
+    char* name, *value;
+    int check = 0;
+    for(cur_node = path->otherAttributes->head; cur_node; cur_node = cur_node->next){
+        if(strcmp(((Attribute*)(cur_node->data))->name, newAttribute->name) == 0){
+            free(((Attribute*)(cur_node->data))->name);
+            free(((Attribute*)(cur_node->data))->value);
+            name = parseData(newAttribute->name);
+            value = parseData(newAttribute->value);
+            (((Attribute*)(cur_node->data))->name) = name;
+            (((Attribute*)(cur_node->data))->value) = value;
+            check = 1;
+            break;
+        }
+    }
+
+    return check;
+}
+
+void changeGroup(SVGimage* image, int elemIndex, Attribute* newAttribute){
+    Node* cur_node;
+    int i;
+
+    if(getLength(image->groups) == 0){
+        printf("There are no Groups!\n");
+        return;
+    } 
+
+    if(getLength(image->groups) <= elemIndex){
+        printf("INDEX OUT OF BOUNDS");
+        return;
+    }
+
+    for(cur_node = image->groups->head, i = 0; i < elemIndex ; cur_node = cur_node->next, i ++);
+    
+    if(!checkGroup((Group*)(cur_node)->data, newAttribute)){
+        Attribute* tempAttr = calloc(1, sizeof(Attribute));
+        tempAttr->name = parseData(newAttribute->name);
+        tempAttr->value = parseData(newAttribute->value);
+        insertBack(((Group*)(cur_node->data))->otherAttributes, tempAttr);
+    }
+    free(newAttribute->name);
+    free(newAttribute->value);
+    free(newAttribute);
+}
+
+bool checkGroup(Group* group, Attribute* newAttribute){
+    Node* cur_node;
+    char* name, *value;
+    int check = 0;
+    for(cur_node = group->otherAttributes->head; cur_node; cur_node = cur_node->next){
+        if(strcmp(((Attribute*)(cur_node->data))->name, newAttribute->name) == 0){
+            free(((Attribute*)(cur_node->data))->name);
+            free(((Attribute*)(cur_node->data))->value);
+            name = parseData(newAttribute->name);
+            value = parseData(newAttribute->value);
+            (((Attribute*)(cur_node->data))->name) = name;
+            (((Attribute*)(cur_node->data))->value) = value;
+            check = 1;
+            break;
+        }
+    }
+
+    return check;
+}
